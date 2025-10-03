@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Web.UI.WebControls;
 using WebformDemo.Models;
 
 namespace WebformDemo
@@ -16,6 +19,39 @@ namespace WebformDemo
                 LoadCourses();
                 LoadTeachers();
             }
+        }
+        public List<Teacher> GetAllTeachers()
+        {
+            string cs = ConfigurationManager.ConnectionStrings["Student"].ConnectionString;
+            List<Teacher> teachers = new List<Teacher>();
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                string query = @"
+            SELECT t.TeacherId, 
+                   t.TeacherName, 
+                   STRING_AGG(c.CourseName, ', ') AS Courses
+            FROM Teachers t
+            LEFT JOIN TeacherCourses tc ON t.TeacherId = tc.TeacherId
+            LEFT JOIN Courses c ON tc.CourseId = c.CourseId
+            GROUP BY t.TeacherId, t.TeacherName;
+        ";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    teachers.Add(new Teacher
+                    {
+                        TeacherId = Convert.ToInt32(reader["TeacherId"]),
+                        TeacherName = reader["TeacherName"].ToString(),
+                        Courses = reader["Courses"] == DBNull.Value ? "" : reader["Courses"].ToString()
+                    });
+                }
+            }
+            return teachers;
         }
 
         private void LoadCourses()
@@ -57,5 +93,15 @@ namespace WebformDemo
                 LoadTeachers();
             }
         }
+        protected void gvTeachers_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
+        {
+            int teacherId = Convert.ToInt32(gvTeachers.DataKeys[e.RowIndex].Value);
+
+            TeacherData teacherData = new TeacherData();
+            teacherData.DeleteTeacher(teacherId);
+
+            LoadTeachers(); // refresh after delete
+        }
+
     }
 }

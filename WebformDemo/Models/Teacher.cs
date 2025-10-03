@@ -9,8 +9,8 @@ namespace WebformDemo.Models
     {
         public int TeacherId { get; set; }
         public string TeacherName { get; set; }
-
-        // Courses the teacher teaches
-        public List<int> CourseIds { get; set; }
+        public List<int> CourseIds { get; set; }   // already present for Add
+        public string Courses { get; set; }        // NEW for display
     }
+
 }
