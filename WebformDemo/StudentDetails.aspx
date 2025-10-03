@@ -1,16 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="StudentDetails.aspx.cs" Inherits="WebformDemo.StudentDetails" %>
+﻿<%@ Page Title="Student Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StudentDetails.aspx.cs" Inherits="WebformDemo.StudentDetails" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="container mt-4">
+        <h2>Student Details</h2>
+        <hr />
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-         <h2>Student Details</h2>
-
-        <asp:Label ID="lblDetails" runat="server" Text=""></asp:Label>
-    </form>
-</body>
-</html>
+        <asp:Label ID="lblDetails" runat="server" CssClass="form-control-plaintext"></asp:Label>
+    </div>
+</asp:Content>

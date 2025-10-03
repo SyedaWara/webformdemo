@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 
 namespace WebformDemo
 {
+
     public partial class ViewStudent : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -21,7 +22,28 @@ namespace WebformDemo
             string cs = ConfigurationManager.ConnectionStrings["Student"].ConnectionString;
             using (SqlConnection con = new SqlConnection(cs))
             {
-                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Students", con);
+                SqlDataAdapter da = new SqlDataAdapter(@"
+SELECT 
+    S.StudentID,
+    S.Name AS StudentName,
+    S.RollNo,
+    S.Class,
+    S.Section,
+    S.Email,
+    ISNULL(
+        STRING_AGG(
+            C.CourseName + ' (Teacher: ' + 
+            ISNULL(T.TeacherName, 'No Teacher') + ')',
+            ', '
+        ), 
+        'No Courses'
+    ) AS CoursesWithTeachers
+FROM Students S
+LEFT JOIN StudentCourses SC ON S.StudentID = SC.StudentID
+LEFT JOIN Courses C ON SC.CourseID = C.CourseID
+LEFT JOIN Teachers T ON SC.TeacherID = T.TeacherID
+GROUP BY S.StudentID, S.Name, S.RollNo, S.Class, S.Section, S.Email", con);
+
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 GridView1.DataSource = dt;

@@ -1,0 +1,7 @@
+﻿ALTER TABLE TeacherCourses
+DROP CONSTRAINT FK__TeacherCo__Cours__3B75D760;
+
+ALTER TABLE TeacherCourses
+ADD CONSTRAINT FK_TeacherCourses_Courses
+FOREIGN KEY (CourseId) REFERENCES Courses(CourseId)
+ON DELETE CASCADE;

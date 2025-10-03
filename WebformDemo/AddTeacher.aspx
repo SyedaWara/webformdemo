@@ -1,0 +1,29 @@
+﻿<%@ Page Title="Add Teacher" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddTeacher.aspx.cs" Inherits="WebformDemo.AddTeacher" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="container mt-4">
+        <h2>Add Teacher</h2>
+
+        <div class="mb-3">
+            <asp:TextBox ID="txtTeacherName" runat="server" CssClass="form-control" Placeholder="Teacher Name"></asp:TextBox>
+        </div>
+
+        <div class="mb-3">
+            <h5>Select Courses</h5>
+            <asp:CheckBoxList ID="chkCourses" runat="server" CssClass="form-check"></asp:CheckBoxList>
+        </div>
+
+        <div class="mb-3">
+            <asp:Button ID="btnAddTeacher" runat="server" Text="Add Teacher" CssClass="btn btn-primary" OnClick="btnAddTeacher_Click" />
+        </div>
+
+        <hr />
+
+        <asp:GridView ID="gvTeachers" runat="server" AutoGenerateColumns="False" DataKeyNames="TeacherId" CssClass="table table-striped">
+            <Columns>
+                <asp:BoundField DataField="TeacherId" HeaderText="ID" ReadOnly="True" />
+                <asp:BoundField DataField="TeacherName" HeaderText="Teacher Name" />
+            </Columns>
+        </asp:GridView>
+    </div>
+</asp:Content>

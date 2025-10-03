@@ -3,40 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\studentdetails.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\studentdetails.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\studentdetails.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\studentdetails.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\viewstudent.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\viewstudent.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\webformdemo\\viewstudent.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\viewstudent.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\webformdemo\\addstudents.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\addstudents.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\addstudents.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\addstudents.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\addstudents.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\addstudents.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\models\\studentdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\models\\studentdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|c:\\users\\warabatool\\desktop\\webformdemo\\webformdemo\\viewstudent.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D09881E-D468-4C7F-A08C-779B2DDBC3C0}|WebformDemo\\WebformDemo.csproj|solutionrelative:webformdemo\\viewstudent.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,80 +22,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{26341fe2-71dd-46fd-bb1b-2e51a92a0d64}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "StudentDetails.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\StudentDetails.aspx.cs",
-              "RelativeDocumentMoniker": "WebformDemo\\StudentDetails.aspx.cs",
-              "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\StudentDetails.aspx.cs",
-              "RelativeToolTip": "WebformDemo\\StudentDetails.aspx.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAzwBUAAAAvAAAAAAAAAA==",
+              "Title": "AddStudents.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\AddStudents.aspx.cs",
+              "RelativeDocumentMoniker": "WebformDemo\\AddStudents.aspx.cs",
+              "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\AddStudents.aspx.cs*",
+              "RelativeToolTip": "WebformDemo\\AddStudents.aspx.cs*",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAgwF0AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T07:27:50.153Z",
+              "WhenOpened": "2025-10-03T06:46:17.46Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "StudentDetails.aspx",
-              "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\StudentDetails.aspx",
-              "RelativeDocumentMoniker": "WebformDemo\\StudentDetails.aspx",
-              "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\StudentDetails.aspx",
-              "RelativeToolTip": "WebformDemo\\StudentDetails.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-09-30T07:26:44.576Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Web.config",
-              "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\Web.config",
-              "RelativeDocumentMoniker": "WebformDemo\\Web.config",
-              "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\Web.config",
-              "RelativeToolTip": "WebformDemo\\Web.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-09-30T05:06:53.417Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "StudentData.cs",
-              "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\Models\\StudentData.cs",
-              "RelativeDocumentMoniker": "WebformDemo\\Models\\StudentData.cs",
-              "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\Models\\StudentData.cs",
-              "RelativeToolTip": "WebformDemo\\Models\\StudentData.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAQwDIAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-26T11:30:37.338Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Student.cs",
-              "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\Models\\Student.cs",
-              "RelativeDocumentMoniker": "WebformDemo\\Models\\Student.cs",
-              "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\Models\\Student.cs",
-              "RelativeToolTip": "WebformDemo\\Models\\Student.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-26T11:27:15.142Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "AddStudents.aspx",
               "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\AddStudents.aspx",
               "RelativeDocumentMoniker": "WebformDemo\\AddStudents.aspx",
@@ -127,33 +47,7 @@
               "RelativeToolTip": "WebformDemo\\AddStudents.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-09-22T09:35:56.211Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AddStudents.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\AddStudents.aspx.cs",
-              "RelativeDocumentMoniker": "WebformDemo\\AddStudents.aspx.cs",
-              "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\AddStudents.aspx.cs",
-              "RelativeToolTip": "WebformDemo\\AddStudents.aspx.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAQwEsAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-22T07:15:14.756Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ViewStudent.aspx",
-              "DocumentMoniker": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\ViewStudent.aspx",
-              "RelativeDocumentMoniker": "WebformDemo\\ViewStudent.aspx",
-              "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\ViewStudent.aspx",
-              "RelativeToolTip": "WebformDemo\\ViewStudent.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-09-22T07:26:54.011Z",
+              "WhenOpened": "2025-10-03T06:46:14.415Z",
               "EditorCaption": ""
             },
             {
@@ -164,9 +58,9 @@
               "RelativeDocumentMoniker": "WebformDemo\\ViewStudent.aspx.cs",
               "ToolTip": "C:\\Users\\WaraBatool\\Desktop\\WebformDemo\\WebformDemo\\ViewStudent.aspx.cs",
               "RelativeToolTip": "WebformDemo\\ViewStudent.aspx.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAcwGkAAABMAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwCEAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-26T12:09:33.668Z",
+              "WhenOpened": "2025-10-03T06:24:27.858Z",
               "EditorCaption": ""
             }
           ]
