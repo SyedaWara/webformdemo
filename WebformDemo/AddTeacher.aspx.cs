@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 using WebformDemo.Models;
 
@@ -19,39 +17,6 @@ namespace WebformDemo
                 LoadCourses();
                 LoadTeachers();
             }
-        }
-        public List<Teacher> GetAllTeachers()
-        {
-            string cs = ConfigurationManager.ConnectionStrings["Student"].ConnectionString;
-            List<Teacher> teachers = new List<Teacher>();
-
-            using (SqlConnection con = new SqlConnection(cs))
-            {
-                string query = @"
-            SELECT t.TeacherId, 
-                   t.TeacherName, 
-                   STRING_AGG(c.CourseName, ', ') AS Courses
-            FROM Teachers t
-            LEFT JOIN TeacherCourses tc ON t.TeacherId = tc.TeacherId
-            LEFT JOIN Courses c ON tc.CourseId = c.CourseId
-            GROUP BY t.TeacherId, t.TeacherName;
-        ";
-
-                SqlCommand cmd = new SqlCommand(query, con);
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    teachers.Add(new Teacher
-                    {
-                        TeacherId = Convert.ToInt32(reader["TeacherId"]),
-                        TeacherName = reader["TeacherName"].ToString(),
-                        Courses = reader["Courses"] == DBNull.Value ? "" : reader["Courses"].ToString()
-                    });
-                }
-            }
-            return teachers;
         }
 
         private void LoadCourses()
@@ -73,13 +38,10 @@ namespace WebformDemo
             if (!string.IsNullOrWhiteSpace(txtTeacherName.Text))
             {
                 List<int> selectedCourses = new List<int>();
-                foreach (var item in chkCourses.Items)
+                foreach (ListItem item in chkCourses.Items)
                 {
-                    var chkItem = (System.Web.UI.WebControls.ListItem)item;
-                    if (chkItem.Selected)
-                    {
-                        selectedCourses.Add(Convert.ToInt32(chkItem.Value));
-                    }
+                    if (item.Selected)
+                        selectedCourses.Add(Convert.ToInt32(item.Value));
                 }
 
                 Teacher teacher = new Teacher
@@ -90,18 +52,88 @@ namespace WebformDemo
 
                 teacherData.AddTeacher(teacher);
                 txtTeacherName.Text = "";
+                foreach (ListItem item in chkCourses.Items) item.Selected = false;
+
                 LoadTeachers();
+                lblMessage.Text = "Teacher added successfully!";
             }
         }
-        protected void gvTeachers_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
+
+        protected void gvTeachers_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int teacherId = Convert.ToInt32(gvTeachers.DataKeys[e.RowIndex].Value);
-
-            TeacherData teacherData = new TeacherData();
             teacherData.DeleteTeacher(teacherId);
-
-            LoadTeachers(); // refresh after delete
+            LoadTeachers();
+            lblMessage.Text = "Teacher deleted successfully!";
         }
 
+        protected void gvTeachers_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            gvTeachers.EditIndex = e.NewEditIndex;
+            LoadTeachers();
+
+            GridViewRow row = gvTeachers.Rows[e.NewEditIndex];
+            CheckBoxList chkEditCourses = (CheckBoxList)row.FindControl("chkEditCourses");
+
+            if (chkEditCourses != null)
+            {
+                // Load all courses
+                chkEditCourses.DataSource = courseData.GetAllCourses();
+                chkEditCourses.DataTextField = "CourseName";
+                chkEditCourses.DataValueField = "CourseId";
+                chkEditCourses.DataBind();
+
+                // Pre-select current teacher's courses
+                int teacherId = Convert.ToInt32(gvTeachers.DataKeys[e.NewEditIndex].Value);
+                Teacher teacher = teacherData.GetTeacherById(teacherId);
+
+                if (teacher.CourseIds != null)
+                {
+                    foreach (ListItem item in chkEditCourses.Items)
+                    {
+                        if (teacher.CourseIds.Contains(Convert.ToInt32(item.Value)))
+                            item.Selected = true;
+                    }
+                }
+            }
+        }
+
+        protected void gvTeachers_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            gvTeachers.EditIndex = -1;
+            LoadTeachers();
+        }
+
+        protected void gvTeachers_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            int teacherId = Convert.ToInt32(gvTeachers.DataKeys[e.RowIndex].Value);
+            GridViewRow row = gvTeachers.Rows[e.RowIndex];
+
+            // Get updated name
+            TextBox txtTeacherName = (TextBox)row.FindControl("txtEditTeacherName");
+            string teacherName = txtTeacherName.Text;
+
+            // Get selected courses
+            CheckBoxList chkEditCourses = (CheckBoxList)row.FindControl("chkEditCourses");
+            List<int> selectedCourses = new List<int>();
+            foreach (ListItem item in chkEditCourses.Items)
+            {
+                if (item.Selected)
+                    selectedCourses.Add(Convert.ToInt32(item.Value));
+            }
+
+            Teacher updatedTeacher = new Teacher
+            {
+                TeacherId = teacherId,
+                TeacherName = teacherName,
+                CourseIds = selectedCourses
+            };
+
+            teacherData.UpdateTeacher(updatedTeacher);
+
+            gvTeachers.EditIndex = -1;
+            LoadTeachers();
+            lblMessage.Text = "Teacher updated successfully!";
+        }
     }
 }

@@ -1,200 +1,162 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Collections.Generic;
 using WebformDemo.Models;
 
 namespace WebformDemo
 {
     public partial class AddStudents : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        // Model Binding for Courses
+        public IEnumerable<Course> GetCourses()
         {
-            if (!IsPostBack)
-            {
-                LoadCourses();
-            }
-        }
-
-        private void LoadCourses()
-        {
+            List<Course> courses = new List<Course>();
             string cs = ConfigurationManager.ConnectionStrings["Student"].ConnectionString;
+
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string query = "SELECT CourseID, CourseName FROM Courses";
-                SqlCommand cmd = new SqlCommand(query, con);
+                SqlCommand cmd = new SqlCommand("SELECT CourseID, CourseName FROM Courses", con);
                 SqlDataReader reader = cmd.ExecuteReader();
-
-                chkCourses.DataSource = reader;
-                chkCourses.DataTextField = "CourseName";
-                chkCourses.DataValueField = "CourseID";
-                chkCourses.DataBind();
-            }
-        }
-        private void LoadTeachersForCourses()
-        {
-            var selectedCourses = chkCourses.Items.Cast<ListItem>()
-                                       .Where(i => i.Selected)
-                                       .Select(i => new { CourseID = i.Value, CourseName = i.Text })
-                                       .ToList();
-
-            List<CourseTeacher> courseTeacherList = new List<CourseTeacher>();
-            string cs = ConfigurationManager.ConnectionStrings["Student"].ConnectionString;
-
-            using (SqlConnection con = new SqlConnection(cs))
-            {
-                con.Open();
-                foreach (var course in selectedCourses)
+                while (reader.Read())
                 {
-                    SqlCommand cmd = new SqlCommand(@"SELECT t.TeacherID, t.TeacherName 
-                                              FROM TeacherCourses tc
-                                              INNER JOIN Teachers t ON tc.TeacherID = t.TeacherID
-                                              WHERE tc.CourseID=@CourseID", con);
-                    cmd.Parameters.AddWithValue("@CourseID", course.CourseID);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
+                    courses.Add(new Course
                     {
-                        courseTeacherList.Add(new CourseTeacher
-                        {
-                            CourseID = int.Parse(course.CourseID),
-                            CourseName = course.CourseName,
-                            TeacherID = (int)reader["TeacherID"],
-                            TeacherName = reader["TeacherName"].ToString()
-                        });
-                    }
-                    reader.Close();
+                        CourseID = (int)reader["CourseID"],
+                        CourseName = reader["CourseName"].ToString()
+                    });
                 }
             }
 
-            // Bind grouped data to Repeater
-            rptCourseTeachers.DataSource = courseTeacherList.GroupBy(ct => new { ct.CourseID, ct.CourseName })
-                .Select(g => new
-                {
-                    CourseID = g.Key.CourseID,
-                    CourseName = g.Key.CourseName,
-                    Teachers = g.Select(t => new { t.TeacherID, t.TeacherName }).ToList()
-                }).ToList();
-            rptCourseTeachers.DataBind();
+            return courses;
         }
 
-
-        protected void rptCourseTeachers_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        // Insert Student
+        public void InsertStudent(Student student)
         {
-            var hfCourseID = (HiddenField)e.Item.FindControl("hfCourseID");
-            hfCourseID.Value = DataBinder.Eval(e.Item.DataItem, "CourseID").ToString();
-
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                var ddl = (DropDownList)e.Item.FindControl("ddlTeachers");
-                
-
-                // Teachers bind
-                var teachers = DataBinder.Eval(e.Item.DataItem, "Teachers") as IEnumerable<object>;
-                if (teachers != null)
-                {
-                    ddl.DataSource = teachers;
-                    ddl.DataTextField = "TeacherName";
-                    ddl.DataValueField = "TeacherID";
-                    ddl.DataBind();
-                }
-                ddl.Items.Insert(0, new ListItem("--Select Teacher--", "0"));
-
-                // CourseID bind hidden field
-                hfCourseID.Value = DataBinder.Eval(e.Item.DataItem, "CourseID").ToString();
-            }
-        }
-
-
-
-
-        protected void btnAdd_Click(object sender, EventArgs e)
-        {
-            
-
-            if (!TxtEmail.Text.Contains("@"))
-            {
-                Response.Write("<script>alert('Invalid Email. Email must contain @');</script>");
-                return;
-            }
-
-            
-
             string cs = ConfigurationManager.ConnectionStrings["Student"].ConnectionString;
+
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
                 SqlTransaction transaction = con.BeginTransaction();
+                bool transactionCompleted = false;
 
                 try
                 {
-                    // Insert Student
                     string insertStudent = @"INSERT INTO Students (Name, RollNo, Class, Section, Email)
-                                     OUTPUT INSERTED.StudentID
-                                     VALUES (@Name,@RollNo,@Class,@Section,@Email)";
-                    SqlCommand insertCmd = new SqlCommand(insertStudent, con, transaction);
-                    insertCmd.Parameters.AddWithValue("@Name", TxtName.Text);
-                    insertCmd.Parameters.AddWithValue("@RollNo", TxtRollNo.Text);
-                    insertCmd.Parameters.AddWithValue("@Class", TxtClass.Text);
-                    insertCmd.Parameters.AddWithValue("@Section", TxtSection.Text);
-                    insertCmd.Parameters.AddWithValue("@Email", TxtEmail.Text);
+                                             OUTPUT INSERTED.StudentID
+                                             VALUES (@Name,@RollNo,@Class,@Section,@Email)";
+                    SqlCommand cmd = new SqlCommand(insertStudent, con, transaction);
+                    cmd.Parameters.AddWithValue("@Name", student.Name);
+                    cmd.Parameters.AddWithValue("@RollNo", student.RollNo);
+                    cmd.Parameters.AddWithValue("@Class", student.Class);
+                    cmd.Parameters.AddWithValue("@Section", student.Section);
+                    cmd.Parameters.AddWithValue("@Email", student.Email);
 
-                    int studentId = (int)insertCmd.ExecuteScalar();
+                    int studentId = (int)cmd.ExecuteScalar();
 
-                    // Insert Student-Course-Teacher mapping
-                    foreach (RepeaterItem item in rptCourseTeachers.Items)
+                    // Student-Course-Teacher mapping
+                    Repeater rptCourseTeachersInside = (Repeater)fvStudent.FindControl("rptCourseTeachers");
+                    if (rptCourseTeachersInside != null)
                     {
-                        var ddlTeachers = (DropDownList)item.FindControl("ddlTeachers");
-                        var hfCourseID = (HiddenField)item.FindControl("hfCourseID");
-
-                        if (hfCourseID == null || string.IsNullOrEmpty(hfCourseID.Value))
+                        foreach (RepeaterItem item in rptCourseTeachersInside.Items)
                         {
-                            Response.Write("<script>alert('CourseID missing!');</script>");
-                            continue;
-                        }
+                            var hfCourseID = (HiddenField)item.FindControl("hfCourseID");
+                            var ddl = (DropDownList)item.FindControl("ddlTeachers");
 
-                        int courseId = Convert.ToInt32(hfCourseID.Value);
-
-                        if (ddlTeachers.SelectedValue != "0")
-                        {
-                            int teacherId = Convert.ToInt32(ddlTeachers.SelectedValue);
-
-                            Response.Write("<script>alert('Inserting: StudentID=" + studentId +
-                                           ", CourseID=" + courseId +
-                                           ", TeacherID=" + teacherId + "');</script>");
-
-                            string insertStudentCourse = @"INSERT INTO StudentCourses(StudentID, CourseID, TeacherID) 
-                                       VALUES(@StudentID,@CourseID,@TeacherID)";
-                            SqlCommand cmd = new SqlCommand(insertStudentCourse, con, transaction);
-                            cmd.Parameters.AddWithValue("@StudentID", studentId);
-                            cmd.Parameters.AddWithValue("@CourseID", courseId);
-                            cmd.Parameters.AddWithValue("@TeacherID", teacherId);
-                            cmd.ExecuteNonQuery();
+                            if (hfCourseID != null && ddl != null && ddl.SelectedValue != "0")
+                            {
+                                string insertMapping = @"INSERT INTO StudentCourses(StudentID, CourseID, TeacherID)
+                                                         VALUES(@StudentID,@CourseID,@TeacherID)";
+                                SqlCommand cmdMap = new SqlCommand(insertMapping, con, transaction);
+                                cmdMap.Parameters.AddWithValue("@StudentID", studentId);
+                                cmdMap.Parameters.AddWithValue("@CourseID", int.Parse(hfCourseID.Value));
+                                cmdMap.Parameters.AddWithValue("@TeacherID", int.Parse(ddl.SelectedValue));
+                                cmdMap.ExecuteNonQuery();
+                            }
                         }
                     }
 
-
                     transaction.Commit();
-                    Response.Write("<script>alert('Student added successfully with courses!');</script>");
+                    transactionCompleted = true;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    transaction.Rollback();
-                    Response.Write("<script>alert('Error adding student: " + ex.Message + "');</script>");
+                    if (!transactionCompleted)
+                        transaction.Rollback();
+                    throw;
                 }
             }
         }
 
-
-       
-        protected void chkCourses_SelectedIndexChanged(object sender, EventArgs e)
+        // FormView ItemInserted Event
+        protected void fvStudent_ItemInserted(object sender, FormViewInsertedEventArgs e)
         {
-            LoadTeachersForCourses();
+            lblSuccess.Text = "Student added successfully!";
+            fvStudent.ChangeMode(FormViewMode.Insert); // resets form
         }
 
+        // Repeater ItemDataBound for Teacher dropdown
+        protected void rptCourseTeachers_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var hfCourseID = (HiddenField)e.Item.FindControl("hfCourseID");
+                var ddl = (DropDownList)e.Item.FindControl("ddlTeachers");
+
+                if (hfCourseID != null && ddl != null)
+                {
+                    string cs = ConfigurationManager.ConnectionStrings["Student"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(cs))
+                    {
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand(@"SELECT t.TeacherID, t.TeacherName 
+                                                          FROM TeacherCourses tc
+                                                          INNER JOIN Teachers t ON tc.TeacherID = t.TeacherID
+                                                          WHERE tc.CourseID=@CourseID", con);
+                        cmd.Parameters.AddWithValue("@CourseID", int.Parse(hfCourseID.Value));
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        List<Teacher> teachers = new List<Teacher>();
+                        while (reader.Read())
+                        {
+                            teachers.Add(new Teacher
+                            {
+                                TeacherId = (int)reader["TeacherID"],
+                                TeacherName = reader["TeacherName"].ToString()
+                            });
+                        }
+
+                        ddl.DataSource = teachers;
+                        ddl.DataTextField = "TeacherName";
+                        ddl.DataValueField = "TeacherId";
+                        ddl.DataBind();
+                        ddl.Items.Insert(0, new ListItem("--Select Teacher--", "0"));
+                    }
+                }
+            }
+        }
+
+        // CheckBoxList SelectedIndexChanged
+        protected void chkCourses_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckBoxList chkCoursesInside = (CheckBoxList)fvStudent.FindControl("chkCourses");
+            Repeater rptCourseTeachersInside = (Repeater)fvStudent.FindControl("rptCourseTeachers");
+
+            if (chkCoursesInside == null || rptCourseTeachersInside == null)
+                return;
+
+            List<Course> selectedCourses = chkCoursesInside.Items.Cast<ListItem>()
+                .Where(i => i.Selected)
+                .Select(i => new Course { CourseID = int.Parse(i.Value), CourseName = i.Text })
+                .ToList();
+
+            rptCourseTeachersInside.DataSource = selectedCourses;
+            rptCourseTeachersInside.DataBind();
+        }
     }
 }
