@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Web.UI.WebControls;
 using WebformDemo.Models;
 
 namespace WebformDemo
@@ -9,39 +11,48 @@ namespace WebformDemo
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                LoadCourses();
-            }
         }
 
+        // Add new course
         protected void btnAddCourse_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txtCourseName.Text))
             {
-                Course course = new Course
+                courseData.AddCourse(new Course
                 {
                     CourseName = txtCourseName.Text
-                };
+                });
 
-                courseData.AddCourse(course);
                 txtCourseName.Text = "";
-                LoadCourses();
+                gvCourses.DataBind(); // refresh GridView
             }
         }
 
-        private void LoadCourses()
+        // Model Binding Methods
+
+        public List<Course> GetCourses()
         {
-            gvCourses.DataSource = courseData.GetAllCourses();
-            gvCourses.DataBind();
+            return courseData.GetAllCourses();
         }
 
-
-        protected void gvCourses_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
+        public void UpdateCourse(int CourseID)
         {
-            int courseId = Convert.ToInt32(gvCourses.DataKeys[e.RowIndex].Value);
-            courseData.DeleteCourse(courseId);
-            LoadCourses();
+            GridViewRow row = gvCourses.Rows[gvCourses.EditIndex];
+            var txtName = (System.Web.UI.WebControls.TextBox)row.FindControl("txtCourseNameEdit");
+
+            if (txtName != null)
+            {
+                courseData.UpdateCourse(new Course
+                {
+                    CourseID = CourseID,
+                    CourseName = txtName.Text
+                });
+            }
+        }
+
+        public void DeleteCourse(int CourseID)
+        {
+            courseData.DeleteCourse(CourseID);
         }
     }
 }

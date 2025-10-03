@@ -28,7 +28,18 @@ namespace WebformDemo.Models
             }
             return courses;
         }
-
+        public void UpdateCourse(Course course)
+        {
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                string query = "UPDATE Courses SET CourseName = @Name WHERE CourseId = @Id";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@Name", course.CourseName);
+                cmd.Parameters.AddWithValue("@Id", course.CourseID);
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
         public void AddCourse(Course course)
         {
             using (SqlConnection con = new SqlConnection(cs))
